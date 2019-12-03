@@ -6,7 +6,7 @@ USER root
 
 ADD cloudera-cdh5.repo /etc/yum.repos.d/
 RUN rpm --import https://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/RPM-GPG-KEY-cloudera
-RUN yum install -y hadoop-hdfs-namenode hadoop-hdfs-datanode hadoop-yarn-resourcemanager hadoop-yarn-nodemanager hadoop-mapreduce-historyserver
+RUN yum install -y hadoop-hdfs-namenode hadoop-hdfs-datanode hadoop-yarn-resourcemanager hadoop-yarn-nodemanager hadoop-mapreduce-historyserver hadoop-hdfs-secondarynamenode
 RUN yum clean all
 
 RUN mkdir -p /var/run/hdfs-sockets; \
