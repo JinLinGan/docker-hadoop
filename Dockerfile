@@ -27,6 +27,7 @@ WORKDIR /
 ADD bin/start-hdfs.sh ./
 ADD bin/start-hdfs-secondary.sh ./
 ADD bin/start-yarn.sh ./
+ADD bin/start-yarn-node.sh ./
 ADD bin/supervisord-bootstrap.sh ./
 ADD bin/supervisord-bootstrap-secondary.sh ./
 ADD bin/wait-for-it.sh ./

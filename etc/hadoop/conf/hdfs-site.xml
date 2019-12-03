@@ -4,6 +4,10 @@
                 <value>file:///var/lib/hadoop-hdfs/cache/hdfs/dfs/name</value>
         </property>
 
+	<property>
+      <name>dfs.namenode.secondary.http-address</name>
+      <value>hadoop-second-master:50090</value>
+    </property>
 	<!--property>
 		<name>dfs.client.read.shortcircuit</name>
 		<value>true</value>

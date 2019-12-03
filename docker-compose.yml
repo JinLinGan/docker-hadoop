@@ -46,4 +46,6 @@ services:
       - ./bin/supervisord-bootstrap.sh:/supervisord-bootstrap.sh
       - ./bin/supervisord-bootstrap-secondary.sh:/supervisord-bootstrap-secondary.sh
       - ./bin/wait-for-it.sh:/wait-for-it.sh
+    ports: 
+      - 50090:50090
     command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
