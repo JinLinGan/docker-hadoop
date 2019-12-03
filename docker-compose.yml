@@ -1,13 +1,11 @@
 version: '3'
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
   hadoop:
-    container_name: hadoop
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: parrotstream/hadoop:2.6.0-cdh5.16.2
-    external_links:
-    - zookeeper
     ports:
     - 50070:50070
     - 50075:50075
@@ -16,7 +14,3 @@ services:
     - 8088:8088
     - 8188:8188
     - 19888:19888
-networks:
-  default:
-    external:
-      name: parrot_default
