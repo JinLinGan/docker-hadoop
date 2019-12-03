@@ -4,8 +4,23 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
-  hadoop:
-    image: parrotstream/hadoop:2.6.0-cdh5.16.2
+  hadoop-master:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+    volumes: 
+      - ./etc/hadoop/conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./etc/hadoop/conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
+      - ./etc/supervisord.conf:/etc/supervisord.conf
+      - ./etc/supervisord-secondary.conf:/etc/supervisord-secondary.conf
+      - ./bin/start-hdfs.sh:/start-hdfs.sh
+      - ./bin/start-hdfs-secondary.sh:/start-hdfs-secondary.sh
+      - ./bin/start-yarn.sh:/start-yarn.sh
+      - ./bin/supervisord-bootstrap.sh:/supervisord-bootstrap.sh
+      - ./bin/supervisord-bootstrap-secondary.sh:/supervisord-bootstrap-secondary.sh
+      - ./bin/wait-for-it.sh:/wait-for-it.sh
     ports:
     - 50070:50070
     - 50075:50075
@@ -14,3 +29,21 @@ services:
     - 8088:8088
     - 8188:8188
     - 19888:19888
+  hadoop-second-master:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+    volumes: 
+      - ./etc/hadoop/conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./etc/hadoop/conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
+      - ./etc/supervisord.conf:/etc/supervisord.conf
+      - ./etc/supervisord-secondary.conf:/etc/supervisord-secondary.conf
+      - ./bin/start-hdfs.sh:/start-hdfs.sh
+      - ./bin/start-hdfs-secondary.sh:/start-hdfs-secondary.sh
+      - ./bin/start-yarn.sh:/start-yarn.sh
+      - ./bin/supervisord-bootstrap.sh:/supervisord-bootstrap.sh
+      - ./bin/supervisord-bootstrap-secondary.sh:/supervisord-bootstrap-secondary.sh
+      - ./bin/wait-for-it.sh:/wait-for-it.sh
+    command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
