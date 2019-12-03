@@ -50,3 +50,4 @@ included in the GitHub source repository.
 - Apache Hadoop 2.6.4 ([2.6.4](https://github.com/parrot-stream/docker-hadoop/blob/2.6.4/Dockerfile))
 - Apache Hadoop 2.6.0-cdh5.15.1 ([2.6.0-cdh5.15.1](https://github.com/parrot-stream/docker-hadoop/blob/2.6.0-cdh5.11.1/Dockerfile))
 - Apache Hadoop 2.6.0-cdh5.11.1 ([2.6.0-cdh5.11.1](https://github.com/parrot-stream/docker-hadoop/blob/2.6.0-cdh5.11.1/Dockerfile))
+- Apache Hadoop 2.6.0-cdh5.16.2 ([2.6.0-cdh5.16.2](https://github.com/JinLinGan/docker-hadoop/blob/2.6.0-cdh5.16.2/Dockerfile))

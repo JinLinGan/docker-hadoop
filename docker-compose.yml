@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: parrotstream/hadoop:2.6.0-cdh5.15.1
+    image: parrotstream/hadoop:2.6.0-cdh5.16.2
     external_links:
     - zookeeper
     ports:
