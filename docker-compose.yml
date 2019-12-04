@@ -60,15 +60,15 @@ services:
       - ./etc/hadoop/conf/core-site.xml:/etc/hadoop/conf/core-site.xml
       - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
       - ./etc/hadoop/conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
-      - ./etc/supervisord.conf:/etc/supervisord.conf
+      - ./etc/supervisord-slave.conf:/etc/supervisord-slave.conf
       - ./etc/supervisord-secondary.conf:/etc/supervisord-secondary.conf
       - ./bin/start-hdfs.sh:/start-hdfs.sh
-      - ./bin/start-hdfs-secondary.sh:/start-hdfs-secondary.sh
-      - ./bin/start-yarn.sh:/start-yarn.sh
+      - ./bin/start-hdfs-datanode.sh:/start-hdfs-datanode.sh
       - ./bin/start-yarn-node.sh:/start-yarn-node.sh
-      - ./bin/supervisord-bootstrap.sh:/supervisord-bootstrap.sh
-      - ./bin/supervisord-bootstrap-secondary.sh:/supervisord-bootstrap-secondary.sh
+      - ./bin/supervisord-slave.sh:/supervisord-slave.sh
+      - ./bin/supervisord-bootstrap-slave.sh:/supervisord-bootstrap-slave.sh
       - ./bin/wait-for-it.sh:/wait-for-it.sh
-    ports: 
-      - 50090:50090
-    command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
+      - ./etc/hadoop/conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+    # ports: 
+    #   - 50090:50090
+    command: ["supervisord", "-c", "/etc/supervisord-slave.conf", "-n"]
