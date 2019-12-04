@@ -18,7 +18,7 @@ supervisorctl start hdfs-namenode
 echo -e	"Starting DataNode..."
 supervisorctl start hdfs-datanode
 
-./wait-for-it.sh localhost:8020 -t 120
+./wait-for-it.sh hadoop-master:8020 -t 120
 rc=$?
 if [ $rc -ne 0 ]; then
     echo -e "\n---------------------------------------"

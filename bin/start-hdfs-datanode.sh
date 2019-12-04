@@ -16,8 +16,6 @@ echo -e "\n---------------------------------------"
 echo -e "Wait for Namenode.."
 ./wait-for-it.sh hadoop-master:8020 -t 120
 
-echo -e	"Starting Secondary NameNode..."
-supervisorctl start hdfs-secondarynamenode
 echo -e	"Starting DataNode..."
 supervisorctl start hdfs-datanode
 

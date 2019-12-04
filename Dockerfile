@@ -4,7 +4,7 @@ MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
 USER root
 
-ADD cloudera-cdh5.repo /etc/yum.repos.d/
+COPY cloudera-cdh5.repo /etc/yum.repos.d/
 RUN rpm --import https://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/RPM-GPG-KEY-cloudera
 RUN yum install -y hadoop-hdfs-namenode hadoop-hdfs-datanode hadoop-yarn-resourcemanager hadoop-yarn-nodemanager hadoop-mapreduce-historyserver hadoop-hdfs-secondarynamenode
 RUN yum install -y sudo
@@ -15,22 +15,15 @@ RUN mkdir -p /var/run/hdfs-sockets; \
 RUN mkdir -p /data/dn/
 RUN chown hdfs.hadoop /data/dn
 
-ADD etc/supervisord.conf /etc/
-ADD etc/supervisord-secondary.conf /etc/
-ADD etc/hadoop/conf/core-site.xml /etc/hadoop/conf/
-ADD etc/hadoop/conf/hdfs-site.xml /etc/hadoop/conf/
-ADD etc/hadoop/conf/mapred-site.xml /etc/hadoop/conf/
+COPY etc/* /etc/
+COPY etc/hadoop/conf/* /etc/hadoop/conf/
+
 
 WORKDIR /
 
 # Various helper scripts
-ADD bin/start-hdfs.sh ./
-ADD bin/start-hdfs-secondary.sh ./
-ADD bin/start-yarn.sh ./
-ADD bin/start-yarn-node.sh ./
-ADD bin/supervisord-bootstrap.sh ./
-ADD bin/supervisord-bootstrap-secondary.sh ./
-ADD bin/wait-for-it.sh ./
+COPY bin/* ./
+
 RUN chmod +x ./*.sh
 RUN chown mapred:mapred /var/log/hadoop-mapreduce
 
