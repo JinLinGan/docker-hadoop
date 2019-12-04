@@ -8,6 +8,14 @@
       <name>dfs.namenode.secondary.http-address</name>
       <value>hadoop-second-master:50090</value>
     </property>
+	<property>
+		<name>dfs.client.read.shortcircuit</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>dfs.domain.socket.path</name>
+		<value>/var/run/hdfs-sockets/dn</value>
+	</property>
 	<!--property>
 		<name>dfs.client.read.shortcircuit</name>
 		<value>true</value>

@@ -5,23 +5,15 @@ services:
     ports:
       - "2181:2181"
   hadoop-master:
+    hostname: hadoop-master
     build:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
     volumes: 
-      - ./etc/hadoop/conf/core-site.xml:/etc/hadoop/conf/core-site.xml
       - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
-      - ./etc/hadoop/conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
-      - ./etc/supervisord.conf:/etc/supervisord.conf
-      - ./etc/supervisord-secondary.conf:/etc/supervisord-secondary.conf
-      - ./bin/start-hdfs.sh:/start-hdfs.sh
-      - ./bin/start-hdfs-secondary.sh:/start-hdfs-secondary.sh
+      - ./etc/hadoop/conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
       - ./bin/start-yarn.sh:/start-yarn.sh
-      - ./bin/start-yarn-node.sh:/start-yarn-node.sh
-      - ./bin/supervisord-bootstrap.sh:/supervisord-bootstrap.sh
-      - ./bin/supervisord-bootstrap-secondary.sh:/supervisord-bootstrap-secondary.sh
-      - ./bin/wait-for-it.sh:/wait-for-it.sh
     ports:
     - 50070:50070
     - 50075:50075
@@ -31,44 +23,29 @@ services:
     - 8188:8188
     - 19888:19888
   hadoop-second-master:
+    hostname: hadoop-second-master
     build:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
     volumes: 
-      - ./etc/hadoop/conf/core-site.xml:/etc/hadoop/conf/core-site.xml
       - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
-      - ./etc/hadoop/conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
-      - ./etc/supervisord.conf:/etc/supervisord.conf
-      - ./etc/supervisord-secondary.conf:/etc/supervisord-secondary.conf
-      - ./bin/start-hdfs.sh:/start-hdfs.sh
-      - ./bin/start-hdfs-secondary.sh:/start-hdfs-secondary.sh
-      - ./bin/start-yarn.sh:/start-yarn.sh
-      - ./bin/start-yarn-node.sh:/start-yarn-node.sh
-      - ./bin/supervisord-bootstrap.sh:/supervisord-bootstrap.sh
-      - ./bin/supervisord-bootstrap-secondary.sh:/supervisord-bootstrap-secondary.sh
-      - ./bin/wait-for-it.sh:/wait-for-it.sh
+      - ./etc/hadoop/conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
     ports: 
       - 50090:50090
     command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
   worker1:
+    hostname: worker1
     build:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
     volumes: 
-      - ./etc/hadoop/conf/core-site.xml:/etc/hadoop/conf/core-site.xml
       - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
-      - ./etc/hadoop/conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
-      - ./etc/supervisord-slave.conf:/etc/supervisord-slave.conf
-      - ./etc/supervisord-secondary.conf:/etc/supervisord-secondary.conf
-      - ./bin/start-hdfs.sh:/start-hdfs.sh
-      - ./bin/start-hdfs-datanode.sh:/start-hdfs-datanode.sh
-      - ./bin/start-yarn-node.sh:/start-yarn-node.sh
-      - ./bin/supervisord-slave.sh:/supervisord-slave.sh
-      - ./bin/supervisord-bootstrap-slave.sh:/supervisord-bootstrap-slave.sh
-      - ./bin/wait-for-it.sh:/wait-for-it.sh
       - ./etc/hadoop/conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+      - ./in.txt:/tmp/in.txt
+    # volumes: 
+    #   - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
     # ports: 
     #   - 50090:50090
     command: ["supervisord", "-c", "/etc/supervisord-slave.conf", "-n"]
