@@ -28,4 +28,3 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount   /
 hadoop fs -cat /tmp/out/part-r-00000
 hadoop fs -rm -r -f /tmp/out
 done
-
