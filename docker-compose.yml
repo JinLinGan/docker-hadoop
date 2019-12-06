@@ -33,10 +33,6 @@ services:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
-    # volumes: 
-    #   - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
-    # ports: 
-    #   - 50090:50090
     command: ["supervisord", "-c", "/etc/supervisord-slave.conf", "-n"]
   runner:
     hostname: runner
@@ -44,11 +40,4 @@ services:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
-    # volumes: 
-    #   - ./in.txt:/tmp/in.txt
-    #   - ./bin/app.sh:/app.sh
-    # volumes: 
-    #   - ./etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
-    # ports: 
-    #   - 50090:50090
     command: ["/app.sh"]
