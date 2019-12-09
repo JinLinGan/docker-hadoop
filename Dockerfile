@@ -28,6 +28,7 @@ RUN chmod +x ./*.sh
 RUN chown mapred:mapred /var/log/hadoop-mapreduce
 
 COPY ./in.txt /tmp/in.txt
+RUN chmod 755 /tmp/in.txt
 
 EXPOSE 50010 50020 50070 50075 50090 50091 50100 50105 50475 50470 8020 8485 8480 8481
 EXPOSE 50030 50060 13562 10020 19888
