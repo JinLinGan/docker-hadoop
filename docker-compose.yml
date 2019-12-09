@@ -10,12 +10,29 @@ services:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+    environment: 
+      HADOOP_NAMENODE_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=50071 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-master -Dcom.sun.management.jmxremote.rmi.port=50071
+      HADOOP_DATANODE_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=50076 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-master -Dcom.sun.management.jmxremote.rmi.port=50076
+      YARN_NODEMANAGER_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=8043 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-master -Dcom.sun.management.jmxremote.rmi.port=8043
+      YARN_RESOURCEMANAGER_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-master -Dcom.sun.management.jmxremote.rmi.port=8089
     ports:
+    # namenode port
     - 50070:50070
+    # namenode jmx prot
+    - 50071:50071
+    # datanode port
     - 50075:50075
+    # datanode  jxm port
+    - 50076:50076
     - 8020:8020
+    # YARN Node Manager port
     - 8042:8042
+    # YARN Node Manager JMX port
+    - 8043:8043
+    # YARN Resource Manager
     - 8088:8088
+    # YARN Resource Manager JMX Port
+    - 8089:8089
     - 8188:8188
     - 19888:19888
   hadoop-second-master:
@@ -24,8 +41,11 @@ services:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+    environment: 
+      HADOOP_SECONDARYNAMENODE_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=50091 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-second-master -Dcom.sun.management.jmxremote.rmi.port=50091
     ports: 
       - 50090:50090
+      - 50091:50091
     command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
   worker1:
     hostname: worker1
@@ -40,4 +60,10 @@ services:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
-    command: ["/app.sh"]
+    volumes: 
+      - ./bin/app.sh:/app.sh
+    command: ["sudo","-u","mapred","bash","-c","/app.sh"]
+  jolokia:
+    image: balaclavalab/jolokia
+    ports: 
+      - "8080:8080"

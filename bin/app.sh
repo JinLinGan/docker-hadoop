@@ -1,7 +1,6 @@
 #!/bin/bash
 
-su - mapred 
-./wait-for-it.sh hadoop-master:8188 -t 200
+./wait-for-it.sh hadoop-master:8188 -t 600
 rc=$?
 if [ $rc -ne 0 ]; then
     echo -e "\n--------------------------------------------"
