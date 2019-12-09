@@ -21,7 +21,7 @@ echo -e "开始循环运行测试案例"
 while :
 do
 echo -e "开始提交测试文件到 HDFS /tmp/test.file"
-hadoop fs -moveFromLocal /tmp/test.file /tmp/
+hadoop fs -copyFromLocal /tmp/test.file /tmp/
 echo -e "提交结束 HDFS /tmp/test.file"
 
 hadoop fs -ls /tmp
