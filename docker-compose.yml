@@ -62,7 +62,7 @@ services:
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
     volumes: 
       - ./bin/app.sh:/app.sh
-    command: ["sudo","-u","mapred","bash","-c","/app.sh"]
+    command: ["sudo","-u","hdfs","bash","-c","/app.sh"]
   jolokia:
     image: balaclavalab/jolokia
     ports: 
