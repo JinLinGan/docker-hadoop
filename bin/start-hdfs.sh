@@ -32,3 +32,5 @@ sudo -E -u hdfs hdfs dfs -mkdir -p /user/hue
 sudo -E -u hdfs hdfs dfs -mkdir -p /user/impala
 sudo -E -u hdfs hdfs dfs -mkdir -p /tmp
 sudo -E -u hdfs hdfs dfs -chmod -R 777 /
+sudo -E -u hdfs hdfs dfs -mkdir /hbase
+sudo -E -u hdfs hdfs dfs -chown hbase /hbase
