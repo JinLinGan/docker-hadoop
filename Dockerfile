@@ -10,6 +10,9 @@ RUN yum install -y hadoop-hdfs-namenode hadoop-hdfs-datanode hadoop-yarn-resourc
 RUN yum install -y sudo
 RUN yum clean all
 
+RUN yum install -y hbase hbase-master hbase-regionserver hbase-thrift
+RUN yum clean all
+
 RUN mkdir -p /var/run/hdfs-sockets; \
     chown hdfs.hadoop /var/run/hdfs-sockets
 RUN mkdir -p /data/dn/
