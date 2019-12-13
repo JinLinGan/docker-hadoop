@@ -69,8 +69,15 @@ services:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+    ports: 
+      - 60010:60010
+      - 10101:10101
+      - 10102:10102
     volumes: 
       - ./bin/supervisord-bootstrap-hbase-master.sh:/supervisord-bootstrap-hbase-master.sh
+    environment: 
+      HBASE_REGIONSERVER_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=10102 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.rmi.port=10102
+      HBASE_MASTER_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=10101 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.rmi.port=10101
     command: ["supervisord", "-c", "/etc/supervisord-hbase-master.conf", "-n"]
   # jolokia:
   #   image: balaclavalab/jolokia
