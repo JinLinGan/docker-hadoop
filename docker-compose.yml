@@ -70,7 +70,7 @@ services:
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
     volumes: 
-      - ./bin/app.sh:/app.sh
+      - ./bin/supervisord-bootstrap-hbase-master.sh:/supervisord-bootstrap-hbase-master.sh
     command: ["supervisord", "-c", "/etc/supervisord-hbase-master.conf", "-n"]
   # jolokia:
   #   image: balaclavalab/jolokia

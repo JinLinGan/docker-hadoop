@@ -12,7 +12,7 @@ if [ $rc -ne 0 ]; then
 fi
 
 ./start-hbase-master.sh
-./wait-for-it.sh hbase-master:60000  -t 300
+./wait-for-it.sh hbase-master:60010  -t 300
 rc=$?
 if [ $rc -ne 0 ]; then
     echo -e "\n--------------------------------------------"

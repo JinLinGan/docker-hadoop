@@ -20,7 +20,7 @@ RUN chown hdfs.hadoop /data/dn
 
 COPY etc/* /etc/
 COPY etc/hadoop/conf/* /etc/hadoop/conf/
-
+COPY etc/hbase/conf/* /etc/hbase/conf/
 
 WORKDIR /
 
