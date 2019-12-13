@@ -35,35 +35,44 @@ services:
     - 8089:8089
     - 8188:8188
     - 19888:19888
-  hadoop-second-master:
-    hostname: hadoop-second-master
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
-    environment: 
-      HADOOP_SECONDARYNAMENODE_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=50091 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-second-master -Dcom.sun.management.jmxremote.rmi.port=50091
-    ports: 
-      - 50090:50090
-      - 50091:50091
-    command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
-  worker1:
-    hostname: worker1
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
-    command: ["supervisord", "-c", "/etc/supervisord-slave.conf", "-n"]
-  runner:
-    hostname: runner
+  # hadoop-second-master:
+  #   hostname: hadoop-second-master
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+  #   environment: 
+  #     HADOOP_SECONDARYNAMENODE_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=50091 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=hadoop-second-master -Dcom.sun.management.jmxremote.rmi.port=50091
+  #   ports: 
+  #     - 50090:50090
+  #     - 50091:50091
+  #   command: ["supervisord", "-c", "/etc/supervisord-secondary.conf", "-n"]
+  # worker1:
+  #   hostname: worker1
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+  #   command: ["supervisord", "-c", "/etc/supervisord-slave.conf", "-n"]
+  # runner:
+  #   hostname: runner
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
+  #   volumes: 
+  #     - ./bin/app.sh:/app.sh
+  #   command: ["sudo","-u","hdfs","bash","-c","/app.sh"]
+  hbase-master:
+    hostname: hbase-master
     build:
       context: .
       dockerfile: Dockerfile
     image: jinlingan/docker-hadoop:2.6.0-cdh5.16.2
     volumes: 
       - ./bin/app.sh:/app.sh
-    command: ["sudo","-u","hdfs","bash","-c","/app.sh"]
-  jolokia:
-    image: balaclavalab/jolokia
-    ports: 
-      - "8080:8080"
+    command: ["supervisord", "-c", "/etc/supervisord-hbase-master.conf", "-n"]
+  # jolokia:
+  #   image: balaclavalab/jolokia
+  #   ports: 
+  #     - "8080:8080"
