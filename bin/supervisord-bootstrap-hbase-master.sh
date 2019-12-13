@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -f /etc/security/limits.d/hbase.conf
+
 ./wait-for-it.sh hadoop-master:8020  -t 300
 rc=$?
 if [ $rc -ne 0 ]; then
